@@ -62,7 +62,7 @@ fun main() {
         val s = this.toString()
         val count = s.length
         if (count == 1) return false
-        return (1 until count).any { n ->
+        return (1 .. count/2).any { n ->
             // can this string be broken into x number of n chars?
             // if so, are all parts then the same?
             n == gcd(n, count) && s.windowed(n, n).unanimous()
