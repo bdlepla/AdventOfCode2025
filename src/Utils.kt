@@ -2,6 +2,8 @@ import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readText
+import kotlin.math.max
+import kotlin.math.min
 
 typealias Coord = Pair<Int, Int>  // Row (Y), Col (X)
 typealias Grid = List<String>
@@ -96,3 +98,14 @@ class PriorityQueueLong<T> {
 }
 
 fun Int.raisedToPower(num:Int):Int = (0..<num).fold(1){a, _ -> a * this}
+
+fun  lcm(first:Int, second:Int):Int = (first*second)/gcd(first,second)
+
+fun gcd(first:Int, second:Int):Int {
+    val max = max(first,second)
+    val min = min(first,second)
+
+    val res = max % min
+    return if (res == 0) min
+    else gcd(min,res)
+}
