@@ -1,4 +1,3 @@
-import kotlin.collections.map
 
 fun main() {
 
@@ -8,25 +7,21 @@ fun main() {
     // *******************
     // Part 1
     // *******************
-    fun String.indicesOf(filter: (Char)->Boolean):List<Int> =
-        this.indices.asIterable().filter { filter(this[it]) }
 
     fun String.getMaxJoltage():Int {
-        val searchString = this.dropLast(1);
+        val searchString = this.dropLast(1)
         (9 downTo 1).forEach { s ->
             val c = s.toString()[0]
-            val matches = searchString.indicesOf{it == c}
-            if (matches.any()) {
-                return matches.maxOfOrNull {
-                    val firstDigit = this[it].toString()
-                    val secondDigit = this.drop(it + 1).max().toString()
-                    (firstDigit + secondDigit).toInt()
-                }!!
+            val index = searchString.indexOf(c)
+            if (index != -1) {
+                val firstDigit = this[index].toString()
+                val secondDigit = this.drop(index + 1).max().toString()
+                return (firstDigit + secondDigit).toInt()
             }
         }
 
         // should never get here
-        return 0
+        throw IllegalStateException("Should not be here")
     }
 
     fun part1(input: List<String>):Int = input.sumOf { it.getMaxJoltage() }
