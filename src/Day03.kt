@@ -35,7 +35,8 @@ fun main() {
         var ret = this
         while (ret.length > 12) {
             var removed = false
-            for (idx in 0..ret.length-2) {
+            val lastIdx = ret.length-1
+            for (idx in 0 until lastIdx) {
                 if (ret[idx+1] > ret[idx]) {
                     ret = ret.removeRange(idx, idx+1)
                     removed = true
