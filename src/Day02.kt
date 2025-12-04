@@ -13,7 +13,7 @@ fun main() {
             line.split(',').map { range ->
                 // each range is numbers separated by '-'
                 val r = range.split('-')
-                LongRange( r[0].toLong(), r[1].toLong())
+                r[0].toLong()..r[1].toLong()
             }
         }
 
@@ -63,9 +63,9 @@ fun main() {
         val count = s.length
         if (count == 1) return false
         return (count/2 downTo 1).any { n ->
-            // can this string be broken evenly into groups of n chars?
+            // can this string be chunked evenly into groups of n chars?
             // if so, are all parts then the same?
-            ((count % n) == 0) && s.windowed(n, n).unanimous()
+            ((count % n) == 0) && s.chunked(n).unanimous()
         }
     }
 
