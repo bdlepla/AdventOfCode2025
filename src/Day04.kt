@@ -62,16 +62,16 @@ fun main() {
 
     fun part2(input: List<String>): Int {
         var diagram = input.parse()
-        val removedRolls = mutableListOf<Coord>()
+        var removedRollCount = 0
         while(true) {
             val removedThisRound = diagram.paperRolls.filter{diagram.canAccessPaperRoll(it)}.toSet()
             if (removedThisRound.isEmpty()) break
             val remainingRolls = diagram.paperRolls.subtract(removedThisRound)
-            removedRolls.addAll(removedThisRound)
+            removedRollCount += removedThisRound.count()
             diagram = Diagram(remainingRolls)
         }
 
-        return removedRolls.count()
+        return removedRollCount
     }
 
     // *******************
