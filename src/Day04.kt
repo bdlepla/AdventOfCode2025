@@ -30,13 +30,16 @@ fun main() {
     // *******************
 
     // returns true is less than 4 of the surrounding 8 spaces contain a paper roll
-    fun Diagram.canAccessPaperRoll(coord:Coord):Boolean =
-        coord.surrounding().intersect(paperRolls).count() < 4
+    fun Diagram.canAccessPaperRoll(coord:Coord):Boolean = coord.surrounding().intersect(paperRolls).count() < 4
 
-    fun part1(input: List<String>):Int {
-        val diagram = input.parse()
-        return diagram.paperRolls.count{diagram.canAccessPaperRoll(it)}
+    fun Diagram.removeAvailablePaperRolls():Pair<Int, Diagram> {
+        val paperRolls = this.paperRolls
+        val toRemove = paperRolls.filter{this.canAccessPaperRoll(it)}.toSet()
+        return toRemove.count() to Diagram(paperRolls.subtract(toRemove))
     }
+
+    fun part1(input: List<String>):Int = input.parse().removeAvailablePaperRolls().first
+
 
 
 
@@ -60,12 +63,11 @@ fun main() {
     // Part 2
     // *******************
 
+
     fun part2(input:List<String>):Int =
         generateSequence(0 to input.parse()) {  (_, diagram) ->
-            val paperRolls = diagram.paperRolls
-            val toRemove = paperRolls.filter{diagram.canAccessPaperRoll(it)}.toSet()
-            if (toRemove.any()) toRemove.count() to Diagram(paperRolls.subtract(toRemove))
-            else null
+            val nextSequence = diagram.removeAvailablePaperRolls()
+            if (nextSequence.first > 0) nextSequence else null
         }.sumOf{it.first}
 
 
