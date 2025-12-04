@@ -60,19 +60,14 @@ fun main() {
     // Part 2
     // *******************
 
-    fun part2(input: List<String>): Int {
-        var diagram = input.parse()
-        var removedRollCount = 0
-        while(true) {
-            val removedThisRound = diagram.paperRolls.filter{diagram.canAccessPaperRoll(it)}.toSet()
-            if (removedThisRound.isEmpty()) break
-            val remainingRolls = diagram.paperRolls.subtract(removedThisRound)
-            removedRollCount += removedThisRound.count()
-            diagram = Diagram(remainingRolls)
-        }
+    fun part2(input:List<String>):Int =
+        generateSequence(0 to input.parse()) {  (_, diagram) ->
+            val paperRolls = diagram.paperRolls
+            val toRemove = paperRolls.filter{diagram.canAccessPaperRoll(it)}.toSet()
+            if (toRemove.any()) toRemove.count() to Diagram(paperRolls.subtract(toRemove))
+            else null
+        }.sumOf{it.first}
 
-        return removedRollCount
-    }
 
     // *******************
     // Test code
