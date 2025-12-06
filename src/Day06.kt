@@ -15,9 +15,9 @@ fun main() {
     // *******************
     fun List<String>.parse():Worksheet {
         val inputNumbers = this.dropLast(1).map{ line ->
-            line.split(' ').filter{it.isNotBlank()}.map{it.toLong()}
+            line.split(' ').filter{ it.isNotBlank() }.map{ it.toLong() }
         }
-        val inputOperators = this.last().split(' ').filter{it.isNotBlank()}.map{
+        val inputOperators = this.last().split(' ').filter{ it.isNotBlank() }.map{
             when (it) {
                 "+" -> Day06Operation.Add
                 "*" -> Day06Operation.Multiply
@@ -26,7 +26,7 @@ fun main() {
         }
 
         val operations = inputOperators.mapIndexed{ idx, op ->
-            op to inputNumbers.map{row -> row[idx] }
+            op to inputNumbers.map{ row -> row[idx] }
         }
 
         return Worksheet(operations)
@@ -37,7 +37,7 @@ fun main() {
     // Part 1
     // *******************
 
-    fun List<Long>.product() = this.reduce{a,b -> a * b}
+    fun List<Long>.product() = this.reduce{ a,b -> a * b }
 
     fun Worksheet.doTheHomework():Long =
         operations.sumOf{ (op, numbers) ->
