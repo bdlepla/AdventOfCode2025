@@ -37,7 +37,7 @@ fun main() {
     // Part 1
     // *******************
 
-    fun List<Long>.product() = this.reduce{ a,b -> a * b }
+    fun List<Long>.product() = this.reduce(Long::times)
 
     fun Worksheet.doTheHomework():Long =
         operations.sumOf{ (op, numbers) ->
